@@ -1,2 +1,5 @@
-out-shakespeare-char/
+out-*/
 __pycache__/
+keys.json
+*.mp3
+nanogpt/

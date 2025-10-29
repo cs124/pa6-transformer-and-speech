@@ -14,7 +14,7 @@ from model import GPTConfig, GPT
 # -----------------------------------------------------------------------------
 # default config values for training a miniature character-level shakespeare model
 # I/O
-out_dir = 'out-shakespeare-char'
+out_dir = 'out-shakespeare'
 eval_interval = 250 # keep frequent because we'll overfit
 log_interval = 5 # don't print too too often
 eval_iters = 20
@@ -23,10 +23,10 @@ always_save_checkpoint = False # we expect to overfit on this small dataset, so 
 init_from = 'scratch' # 'scratch' or 'resume' or 'gpt2*'
 # wandb logging
 wandb_log = False # disabled by default
-wandb_project = 'shakespeare-char'
+wandb_project = 'shakespeare'
 wandb_run_name = 'mini-gpt'
 # data
-dataset = 'shakespeare_char'
+dataset = 'shakespeare'
 gradient_accumulation_steps = 1
 batch_size = 12
 block_size = 64 # context of up to 64 previous characters

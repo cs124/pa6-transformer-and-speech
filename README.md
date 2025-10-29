@@ -1,6 +1,6 @@
 #  Programming Assignment 6 - Transformers and Speech
   
-In this assignment, you will implement a Transformer-based language model for text generation and train it on a dataset of Shakespeare's plays. 
+In this assignment, you will implement part of a Transformer-based language model for text generation and train it on a dataset of Shakespeare corpus. 
 You will then use your trained model to generate some texts, convert them into audio files, and transcribe the audio files back into text.
 
 ## Environment Setup
@@ -8,7 +8,7 @@ You will then use your trained model to generate some texts, convert them into a
 ```
 conda create -n cs124 python=3.10 -y
 conda activate cs124
-pip install "torch==2.6.0" "numpy==2.1.3" "transformers==4.39.3" "datasets==2.20.0" "tiktoken-0.7.0" "wandb==0.17.6" "tqdm==4.66.4"
+pip install "torch==2.6.0" "numpy==2.1.3" "transformers==4.39.3" "datasets==2.20.0" "tiktoken-0.7.0" "wandb==0.17.6" "tqdm==4.66.4" "openai==2.6.0" "together"
 ```
 
 ## Outline 
@@ -25,6 +25,10 @@ TODO: add torch mini tutorial
 - TODO: ask them to record them saying those sentences in noisy environments
 - Convert your generated audio back to text with Whisper (asr.py)
 - Just ask them to upload wav file and texts.
+
+Switch to Together API. 
+Grading: check word error rate on given speech files 
+Also: add a small Torch tutorial 
 
 ## Part 1: Implement Attention in Transformer and Train the Model
 
