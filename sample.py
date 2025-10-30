@@ -6,11 +6,12 @@ import pickle
 from contextlib import nullcontext
 import torch
 import tiktoken
+import json
 from model import GPTConfig, GPT
 
 # -----------------------------------------------------------------------------
 init_from = 'resume' # either 'resume' (from an out_dir) or a gpt2 variant (e.g. 'gpt2-xl')
-out_dir = 'out-shakespeare-char' # ignored if init_from is not 'resume'
+out_dir = 'out-shakespeare' # ignored if init_from is not 'resume'
 start = "\n" # or "<|endoftext|>" or etc. Can also specify a file, use as: "FILE:prompt.txt"
 num_samples = 5 # number of samples to draw
 max_new_tokens = 100 # number of tokens generated in each sample
@@ -79,6 +80,7 @@ if start.startswith('FILE:'):
 start_ids = encode(start)
 x = (torch.tensor(start_ids, dtype=torch.long, device=device)[None, ...])
 
+sampled_sentences = []
 # run generation
 with torch.no_grad():
     with ctx:
@@ -86,3 +88,8 @@ with torch.no_grad():
             y = model.generate(x, max_new_tokens, temperature=temperature, top_k=top_k)
             print(decode(y[0].tolist()))
             print('---------------')
+            sampled_sentences.append(decode(y[0].tolist()))
+
+# save the sampled sentences to a json file
+with open('sampled_sentences.json', 'w') as f:
+    json.dump(sampled_sentences, f, indent=4)

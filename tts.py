@@ -1,14 +1,15 @@
 from pathlib import Path
 from together import Together
+import json 
 
 client = Together()
 
-speech_file_path = "speech.mp3"
+sampled_sentences = json.load(open('sampled_sentences.json'))
+all_sentences = "\n".join(sampled_sentences)
 
 response = client.audio.speech.create(
     model="cartesia/sonic",
-    input="Today is a wonderful day to build something people love!",
+    input=all_sentences,
     voice="helpful woman",
 )
-
-response.stream_to_file(speech_file_path)
+response.stream_to_file("sampled_sentences_speech.mp3")

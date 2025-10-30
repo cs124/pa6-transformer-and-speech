@@ -8,10 +8,9 @@ import torch
 import tiktoken
 from model import GPTConfig, GPT
 import numpy as np
-
+import json
 # -----------------------------------------------------------------------------
 init_from = 'resume'
-out_dir = 'out-shakespeare-char'
 input_sentences = [
     "To be, or not to be: that is the question.",
     "O Romeo, Romeo! wherefore art thou Romeo?",
@@ -29,7 +28,7 @@ device_type = 'cuda' if 'cuda' in device else 'cpu'
 ptdtype = {'float32': torch.float32, 'bfloat16': torch.bfloat16, 'float16': torch.float16}[dtype]
 ctx = nullcontext() if device_type == 'cpu' else torch.amp.autocast(device_type=device_type, dtype=ptdtype)
 
-def load_model_and_tokenizer():
+def load_model_and_tokenizer(out_dir):
     if init_from == 'resume':
         ckpt_path = os.path.join(out_dir, 'ckpt.pt')
         checkpoint = torch.load(ckpt_path, map_location=device)
@@ -83,10 +82,22 @@ def perplexity_sentence(model, encode, sentence):
     return ppl
 
 if __name__ == "__main__":
-    model, encode = load_model_and_tokenizer()
-    print("Sentence Perplexities:")
+    out_dir = 'out-shakespeare'
+    output_file = 'perplexity_results.json'
+    results = []
+    print(f"Loading model from {out_dir}...")
+    model, encode = load_model_and_tokenizer(out_dir)
+    print(f"Perplexity for {out_dir}:")
     for sent in input_sentences:
         ppl = perplexity_sentence(model, encode, sent)
+        results.append({
+            'sentence': sent,
+            'perplexity': ppl
+        })
         print(f"Perplexity for: \"{sent}\"")
         print(f"Perplexity: {ppl:.3f}")
         print("-" * 50)
+
+    # save the results to a json file
+    with open(output_file, 'w') as f:
+        json.dump(results, f, indent=4)

@@ -3,3 +3,6 @@ __pycache__/
 keys.json
 *.mp3
 nanogpt/
+sampled_sentences.json
+perplexity_results.json
+sampled*.txt
