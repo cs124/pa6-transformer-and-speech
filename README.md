@@ -32,7 +32,7 @@ python train.py
 
 We have already processed the Shakespeare corpus and stored the tokenized data in `data/`.
 By default, the training script uses the data that's tokenized via the GPT-2 BPE tokenizer.
-You are also encouraged to try out what happens when you train a character-level model by changing the `dataset` variable in `train.py` to `'shakespeare-char'`.
+If you wish, you could also try training a character-level model by changing the `dataset` variable in `train.py` to `'shakespeare-char'`; although note that all of our benchmarking numbers are based on the BPE-tokenized data.
 The training script runs on CPU by default. Running the training script for 2000 iterations on my Macbook Pro with M1 chip takes around 15 minutes and gets a loss below 4.0.
 If you have extra time, you are encouraged to try out different hyperparameters and try to improve the validation loss of your model.
 
